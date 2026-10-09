@@ -1,0 +1,695 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sunny Mobile Car Wash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=DM+Mono:wght@400;500&family=Manrope:wght@400..800&display=swap">
+<style>
+/* Layout concept: a dark showroom. One glossy hero panel with water beads and a sun glint that follows the pointer; everything else stays quiet, editorial and hairline-ruled. Dark first, pearl-light variant. */
+:root {
+  --bg: #090D12;
+  --bg-2: #0E141B;
+  --surface: #131B25;
+  --line: rgba(255,255,255,.1);
+  --fg: #EEF2F6;
+  --muted: #9AA8B8;
+  --sun: #F4B63F;
+  --sun-hot: #FF8E3C;
+  --on-sun: #1A1205;
+  --accent-text: #F4B63F;
+  --grad-a: #FFD26A;
+  --grad-b: #FF8E3C;
+  --glass: rgba(9,13,18,.72);
+  --glass-fg: #EEF2F6;
+  --nav-bg: rgba(9,13,18,.78);
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F3F5F7; --bg-2: #E9EDF1; --surface: #FFFFFF; --line: rgba(10,20,30,.13);
+    --fg: #0C141C; --muted: #4F5E6E; --accent-text: #9A5F00; --grad-a: #C98410; --grad-b: #C2501A;
+    --nav-bg: rgba(243,245,247,.82);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F3F5F7; --bg-2: #E9EDF1; --surface: #FFFFFF; --line: rgba(10,20,30,.13);
+  --fg: #0C141C; --muted: #4F5E6E; --accent-text: #9A5F00; --grad-a: #C98410; --grad-b: #C2501A;
+  --nav-bg: rgba(243,245,247,.82);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, figure, blockquote, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 20px; }
+@media (min-width: 720px) { .wrap { padding-inline: 32px; } }
+section { padding-block: clamp(64px, 9vw, 120px); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-text); }
+h2.display, h1.display { font-family: var(--font-display); font-weight: 500; letter-spacing: -.012em; line-height: 1.04; text-wrap: balance; }
+h2.display { font-size: clamp(2rem, 4.6vw, 3.6rem); }
+.display em, .grad { font-style: italic; background: linear-gradient(100deg, var(--grad-a), var(--grad-b)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
+.lede { color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.15rem); max-width: 58ch; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 0; cursor: pointer; text-decoration: none; font-weight: 700; font-size: 15px; letter-spacing: .01em; padding: 15px 26px; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.btn-sun { background: linear-gradient(135deg, var(--sun), var(--sun-hot)); color: var(--on-sun); box-shadow: 0 10px 30px -10px rgba(255,142,60,.55); }
+.btn-sun:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -10px rgba(255,142,60,.7); }
+.btn-line { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
+.btn-line:hover { box-shadow: inset 0 0 0 1px var(--sun); }
+.btn-sm { padding: 10px 18px; font-size: 14px; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: var(--nav-bg); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.brand b { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; letter-spacing: .01em; white-space: nowrap; }
+.brand small { display: none; font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: none; gap: 28px; font-size: 14px; font-weight: 600; }
+.nav-links a { text-decoration: none; color: var(--muted); transition: color .2s; }
+.nav-links a:hover { color: var(--fg); }
+@media (min-width: 900px) { .nav-links { display: flex; } .brand small { display: block; } }
+
+/* hero */
+.hero { padding-block: clamp(36px, 6vw, 72px) clamp(48px, 7vw, 90px); }
+.hero-grid { display: grid; gap: 40px; align-items: center; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; } }
+.hero h1 { font-size: clamp(2.7rem, 7vw, 5.6rem); margin-block: 18px 22px; }
+.hero .lede { margin-bottom: 30px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-tag { margin-top: 30px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+.panel { position: relative; aspect-ratio: 4 / 5; width: 100%; max-width: 100%; border-radius: 28px; overflow: hidden; background: #0a1626; box-shadow: 0 40px 80px -40px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.1); touch-action: pan-y; }
+@media (max-width: 899px) { .panel { aspect-ratio: 4 / 3.4; } }
+.panel canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.chip { position: absolute; display: flex; align-items: center; gap: 10px; background: rgba(9,13,18,.72); color: #EEF2F6; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.14); border-radius: 14px; padding: 10px 14px; font-size: 13px; line-height: 1.3; }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: #F4B63F; box-shadow: 0 0 12px #F4B63F; flex: none; }
+.chip.a { left: 16px; bottom: 16px; }
+.chip.b { right: 16px; top: 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+
+/* trust strip */
+.strip { border-block: 1px solid var(--line); background: var(--bg-2); padding-block: 0; }
+.strip ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .strip ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.strip li { padding: 22px 18px; border-left: 1px solid var(--line); }
+.strip li:nth-child(odd) { border-left: 0; }
+@media (min-width: 900px) { .strip li:nth-child(odd) { border-left: 1px solid var(--line); } .strip li:first-child { border-left: 0; } }
+.strip strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; }
+.strip span { color: var(--muted); font-size: 13.5px; }
+
+/* services */
+.sec-head { display: grid; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); }
+.svc { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .svc { grid-template-columns: 300px minmax(0, 1fr); gap: 48px; } }
+.tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+@media (min-width: 900px) { .tabs { flex-direction: column; overflow: visible; gap: 0; border-top: 1px solid var(--line); } }
+.tab { flex: none; text-align: left; background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; cursor: pointer; font-weight: 600; font-size: 14.5px; color: var(--muted); white-space: nowrap; transition: color .2s, background .2s, border-color .2s; }
+.tab:hover { color: var(--fg); }
+.tab[aria-selected="true"] { color: var(--on-sun); background: linear-gradient(135deg, var(--sun), var(--sun-hot)); border-color: transparent; }
+@media (min-width: 900px) {
+  .tab { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 20px 4px; display: flex; justify-content: space-between; font-size: 16px; background: transparent !important; color: var(--muted); }
+  .tab::after { content: "→"; opacity: 0; transform: translateX(-6px); transition: .2s; }
+  .tab[aria-selected="true"] { color: var(--fg); }
+  .tab[aria-selected="true"]::after, .tab:hover::after { opacity: 1; transform: none; color: var(--sun); }
+}
+.svc-panel { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: clamp(24px, 4vw, 44px); display: grid; gap: 22px; align-content: start; }
+.svc-panel h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem, 3.4vw, 2.7rem); line-height: 1.08; text-wrap: balance; }
+.svc-panel .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text); }
+.svc-panel p.d { color: var(--muted); max-width: 60ch; }
+.ticks { display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 12px; align-items: baseline; }
+.ticks li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--sun), var(--sun-hot)); transform: translateY(-1px); }
+.quote { border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 8px; }
+.quote blockquote { font-family: var(--font-display); font-style: italic; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.35; text-wrap: pretty; }
+.quote cite { font-style: normal; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+
+/* details index */
+.details { background: var(--bg-2); border-block: 1px solid var(--line); }
+.idx { border-top: 1px solid var(--line); }
+.idx li { display: grid; gap: 10px; padding-block: 28px; border-bottom: 1px solid var(--line); }
+@media (min-width: 800px) { .idx li { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; align-items: baseline; } }
+.idx h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.7rem, 3.6vw, 2.8rem); line-height: 1.1; text-wrap: balance; }
+.idx p { color: var(--muted); max-width: 56ch; }
+.idx p q { color: var(--fg); quotes: "\201C" "\201D"; }
+.idx p small { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; }
+
+/* how it works */
+.steps { display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
+@media (min-width: 900px) { .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.step { padding: 28px 24px 30px 0; border-bottom: 1px solid var(--line); display: grid; gap: 10px; align-content: start; }
+@media (min-width: 900px) { .step { border-bottom: 0; padding-right: 28px; } .step + .step { padding-left: 28px; border-left: 1px solid var(--line); } }
+.step .n { font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; color: var(--accent-text); }
+.step h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; line-height: 1.15; }
+.step p { color: var(--muted); font-size: 15px; }
+.callout { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; justify-content: space-between; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px 24px; }
+.callout p { max-width: 62ch; }
+.callout b { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
+
+/* reviews */
+.reviews { background: var(--bg-2); border-block: 1px solid var(--line); }
+.wall { columns: 1; column-gap: 18px; }
+@media (min-width: 700px) { .wall { columns: 2; } }
+@media (min-width: 1040px) { .wall { columns: 3; } }
+.rv { break-inside: avoid; margin: 0 0 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px; display: grid; gap: 16px; }
+.rv.big { background: linear-gradient(160deg, var(--surface), var(--surface)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sun) 35%, transparent); }
+.rv blockquote { line-height: 1.55; text-wrap: pretty; }
+.rv.big blockquote { font-family: var(--font-display); font-size: 1.3rem; line-height: 1.4; }
+.rv figcaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.rv figcaption b { font-weight: 700; font-size: 14.5px; }
+.rv figcaption span { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); }
+.crew { margin-top: 12px; color: var(--muted); max-width: 70ch; }
+.crew b { color: var(--fg); font-weight: 600; }
+
+/* booking */
+.book-grid { display: grid; gap: 36px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 960px) { .book-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; } }
+.book-side { display: grid; gap: 20px; }
+.book-side ul { display: grid; gap: 12px; margin-top: 8px; }
+.book-side li { display: flex; gap: 12px; color: var(--muted); }
+.book-side li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 9px; border-radius: 50%; background: linear-gradient(135deg, var(--sun), var(--sun-hot)); }
+.contact { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.visit { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 22px; }
+.visit address { font-style: normal; font-family: var(--font-display); font-size: 1.35rem; line-height: 1.3; }
+.form { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: clamp(22px, 4vw, 40px); display: grid; gap: 22px; min-width: 0; }
+.row { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.field { display: grid; gap: 8px; min-width: 0; }
+.field > label, .field > legend, fieldset.field legend { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0; }
+fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.in { width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-height: 50px; transition: border-color .2s, box-shadow .2s; }
+.in:focus { outline: none; border-color: var(--sun); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sun) 25%, transparent); }
+textarea.in { min-height: 96px; resize: vertical; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts input { position: absolute; opacity: 0; pointer-events: none; }
+.opts label { cursor: pointer; border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; font-size: 14.5px; font-weight: 600; color: var(--muted); background: var(--bg); transition: .2s; }
+.opts label:hover { color: var(--fg); }
+.opts input:checked + label { color: var(--on-sun); background: linear-gradient(135deg, var(--sun), var(--sun-hot)); border-color: transparent; }
+.opts input:focus-visible + label { outline: 2px solid var(--sun); outline-offset: 3px; }
+.result { display: grid; gap: 16px; }
+.result pre { margin: 0; white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; }
+.result h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.8rem; line-height: 1.1; }
+.note { color: var(--muted); font-size: 13.5px; }
+
+/* faq */
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding-block: 22px; font-family: var(--font-display); font-size: clamp(1.15rem, 2vw, 1.5rem); font-weight: 500; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--sun); font-size: 1.5rem; flex: none; transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { color: var(--muted); padding-bottom: 24px; max-width: 66ch; }
+
+/* closing */
+.closing { text-align: left; background: var(--bg-2); border-top: 1px solid var(--line); }
+.closing .wrap { display: grid; gap: 28px; justify-items: start; }
+.closing h2 { font-size: clamp(2.2rem, 6vw, 4.8rem); max-width: 18ch; }
+footer { border-top: 1px solid var(--line); padding-block: 32px 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+/* mobile bar */
+.mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--nav-bg); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-top: 1px solid var(--line); display: flex; gap: 10px; transition: transform .25s ease; }
+.mbar .btn { flex: 1; }
+.mbar.off { transform: translateY(110%); }
+@media (min-width: 720px) { .mbar { display: none; } }
+@media (max-width: 719px) { footer { padding-bottom: 96px; } }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Sunny Mobile Car Wash, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="sg" gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="30" y2="30"><stop offset="0" stop-color="#FFD26A"/><stop offset="1" stop-color="#FF8E3C"/></linearGradient></defs>
+        <circle cx="16" cy="16" r="7" fill="url(#sg)"/>
+        <g stroke="url(#sg)" stroke-width="2" stroke-linecap="round" fill="none"><path d="M16 2.5v4M16 25.5v4M2.5 16h4M25.5 16h4M6.5 6.5l2.8 2.8M22.7 22.7l2.8 2.8M25.5 6.5l-2.8 2.8M9.3 22.7l-2.8 2.8"/></g>
+      </svg>
+      <span><b>Sunny's</b><small>Mobile Car Wash &amp; Detailing</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#details">The details</a>
+      <a href="#how">How it works</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-sun btn-sm" href="#book">Book a visit</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Mobile car wash &amp; auto detailing</p>
+        <h1 class="display">Showroom <em>shine</em>, parked at your door.</h1>
+        <p class="lede">Sunny's brings careful hands, proper protection and a brand-new finish to your home, office or garage. Wash, deep detail, ceramic coating, PPF and tint, all without you driving anywhere.</p>
+        <div class="cta-row">
+          <a class="btn btn-sun" href="#book">Book a visit</a>
+          <a class="btn btn-line" href="#services">See the services</a>
+        </div>
+        <p class="hero-tag">4.9 / 5 on Google &middot; 90 reviews &middot; General Trias, Cavite<br>Pulido ang linis. Walang abala.</p>
+      </div>
+      <div class="panel" id="panel">
+        <canvas id="beads" aria-label="Water beading on a freshly coated, glossy paint panel with a sun glint that follows your cursor" role="img"></canvas>
+        <div class="chip b">Ceramic finish</div>
+        <div class="chip a"><i></i><span>Water beads, paint pops.<br>Move your cursor to chase the sun.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <ul>
+        <li><strong>We come to you</strong><span>Home, office or garage</span></li>
+        <li><strong>Ceramic, PPF &amp; tint</strong><span>Protection that lasts</span></li>
+        <li><strong>Cars, vans &amp; bikes</strong><span>Fleets welcome too</span></li>
+        <li><strong>Easy to reschedule</strong><span>Booking that bends to you</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Services</p>
+        <h2 class="display">Everything your car needs, <em>on site.</em></h2>
+        <p class="lede">From a quick weekend wash to full paint protection. Pick a service to see what's included and what customers say about it.</p>
+      </div>
+      <div class="svc">
+        <div class="tabs" role="tablist" aria-label="Services" id="tabs"></div>
+        <div class="svc-panel" id="svcPanel" role="tabpanel" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="details" id="details">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Attention to detail</p>
+        <h2 class="display"><em>Pulido</em> ang linis.</h2>
+        <p class="lede">The little things are where customers notice the difference. These are the ones they wrote about.</p>
+      </div>
+      <ul class="idx">
+        <li>
+          <h3>The speaker mesh nobody remembers.</h3>
+          <p><q>They also cleaned the speaker mesh which the previous detailer forgot to clean.</q><small>Rod Riggs, Google review</small></p>
+        </li>
+        <li>
+          <h3>Engine bays and acid rain stains.</h3>
+          <p><q>The engine bay was spotless, acid rain stains were completely gone, and our leather seats looked brand new!</q><small>Ronessa Castro, Google review</small></p>
+        </li>
+        <li>
+          <h3>Seats and carpets out, then back, undamaged.</h3>
+          <p>From removing the chairs and carpets to putting everything back together, the crew worked <q>very gentle para di madamage.</q><small>Jeanica Hernandez, Google review</small></p>
+        </li>
+        <li>
+          <h3>Original paint colour, restored.</h3>
+          <p><q>Its original paint colour was restored, as well as the look and feel of the leather seats and surfaces inside our car.</q><small>Blez17, Google review</small></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="display">Four steps. <em>Zero hassle.</em></h2>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="n">STEP 1</span><h3>Book your slot</h3><p>Choose a service and a time that suits you. Plans change, so rescheduling is easy.</p></li>
+        <li class="step"><span class="n">STEP 2</span><h3>We arrive on time</h3><p>The crew comes to your home, office or garage with what they need.</p></li>
+        <li class="step"><span class="n">STEP 3</span><h3>We detail, you carry on</h3><p>Work, rest or run errands. You get updates as the job moves along.</p></li>
+        <li class="step"><span class="n">STEP 4</span><h3>The reveal</h3><p>Walk around the car with the crew and enjoy the finish you booked.</p></li>
+      </ol>
+      <div class="callout">
+        <p><b>No space at home?</b> Tell us when you book. We'll suggest bringing the car over to our location instead.</p>
+        <a class="btn btn-line btn-sm" href="#book">Ask about it</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Customer reviews</p>
+        <h2 class="display">Parang <em>brand new</em> ulit.</h2>
+        <p class="lede">Rated 4.9 on Google across 90 reviews. Customers keep telling us the same few things: it was thorough, it was convenient and they'd book again.</p>
+      </div>
+      <div class="wall">
+        <figure class="rv big"><blockquote>Pulido ang linis! The engine bay was spotless, acid rain stains were completely gone, and our leather seats looked brand new!</blockquote><figcaption><b>Ronessa Castro</b><span>Local Guide</span></figcaption></figure>
+        <figure class="rv"><blockquote>They bring a showroom-quality clean directly to my driveway. The team is always punctual, professional, and incredibly detailed.</blockquote><figcaption><b>Herbie Porto</b><span>Home service</span></figcaption></figure>
+        <figure class="rv"><blockquote>Just got ceramic coating + PPF done at Sunny. Loved how careful they were! Everything looks super shiny and feels almost scratch-proof.</blockquote><figcaption><b>alyssa</b><span>Ceramic + PPF</span></figcaption></figure>
+        <figure class="rv"><blockquote>Excellent job! Feels like brand new ulit ang baby namin! Thank you for the service!</blockquote><figcaption><b>Maria Glaiza Sy</b><span>Google review</span></figcaption></figure>
+        <figure class="rv"><blockquote>This was my first time booking a home service for auto detailing, and I couldn't be happier. From booking to the actual service, everything was smooth and seamless.</blockquote><figcaption><b>Valen</b><span>First-time booking</span></figcaption></figure>
+        <figure class="rv"><blockquote>Very convenient and prices are reasonable. Very easy rin to get schedule or reschedule. Very malinis ang gawa!</blockquote><figcaption><b>MAYORA IPE</b><span>Google review</span></figcaption></figure>
+        <figure class="rv"><blockquote>Our 8-year-old car looks and smells almost brand new. Who needs to buy a new car when you can have your old restored with the help of this service?</blockquote><figcaption><b>Blez17</b><span>Full detail</span></figcaption></figure>
+        <figure class="rv"><blockquote>Fair pricing and excellent cleanliness, from exterior to interior. You can really tell the owner is hands on and truly cares.</blockquote><figcaption><b>JoshDJ</b><span>Local Guide</span></figcaption></figure>
+        <figure class="rv"><blockquote>They arrived right on time, worked efficiently, and left my car looking spotless.</blockquote><figcaption><b>Kim Alexis Aquino</b><span>Google review</span></figcaption></figure>
+        <figure class="rv"><blockquote>The shine looked great and the car felt really well protected. The whole team was friendly and easy to talk to.</blockquote><figcaption><b>Paula Derramas</b><span>Ceramic coating</span></figcaption></figure>
+        <figure class="rv"><blockquote>Excellent and fast service. They also offer home service which is convenient sa mga busy na tao.</blockquote><figcaption><b>Spec Ter</b><span>Google review</span></figcaption></figure>
+        <figure class="rv"><blockquote>Best mobile carwash in town!</blockquote><figcaption><b>Sandra Ambat</b><span>Google review</span></figcaption></figure>
+      </div>
+      <p class="crew">Customers often thank the crew by name. <b>Ariel, Ike, Mac, Mike, PJ and Joshua</b> have all had shout-outs.</p>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap book-grid">
+      <div class="book-side">
+        <p class="eyebrow">Book a visit</p>
+        <h2 class="display">Tell us about your car. <em>We'll handle the rest.</em></h2>
+        <p class="lede">Fill in the details and we'll prepare your booking request, ready to send. Pricing depends on your vehicle and the service, so you'll get a clear quote before work begins.</p>
+        <ul>
+          <li>Home, office, garage or our location</li>
+          <li>Cars, SUVs, pickups, vans and motorcycles</li>
+          <li>Fleet and company vehicles welcome</li>
+        </ul>
+        <div class="visit">
+          <p class="eyebrow">Find us</p>
+          <address>Purok 5, Arnaldo Hwy,<br>General Trias, Cavite 4107</address>
+          <p class="note">Opens 7 AM (Saturdays). Message us to confirm hours on other days.</p>
+          <p class="note">Plus code: 8WP5+GJ General Trias, Cavite</p>
+          <div class="contact" id="contact"></div>
+        </div>
+      </div>
+      <div>
+        <form class="form" id="bookForm" autocomplete="on">
+          <div class="row two">
+            <div class="field"><label for="name">Your name</label><input class="in" id="name" name="name" type="text" required autocomplete="name" placeholder="Juan Dela Cruz"></div>
+            <div class="field"><label for="mobile">Mobile number</label><input class="in" id="mobile" name="mobile" type="tel" required autocomplete="tel" inputmode="tel" placeholder="09XX XXX XXXX"></div>
+          </div>
+          <div class="field"><label for="service">Service</label>
+            <select class="in" id="service" name="service" required></select>
+          </div>
+          <fieldset class="field"><legend>Vehicle</legend>
+            <div class="opts">
+              <input type="radio" name="vehicle" id="v1" value="Car" checked><label for="v1">Car</label>
+              <input type="radio" name="vehicle" id="v2" value="SUV / Pickup"><label for="v2">SUV / Pickup</label>
+              <input type="radio" name="vehicle" id="v3" value="Van"><label for="v3">Van</label>
+              <input type="radio" name="vehicle" id="v4" value="Motorcycle"><label for="v4">Motorcycle</label>
+            </div>
+          </fieldset>
+          <fieldset class="field"><legend>Where should we come?</legend>
+            <div class="opts">
+              <input type="radio" name="place" id="p1" value="My home" checked><label for="p1">Home</label>
+              <input type="radio" name="place" id="p2" value="My office"><label for="p2">Office</label>
+              <input type="radio" name="place" id="p3" value="I'll bring it to Sunny's"><label for="p3">I'll bring it over</label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="area">Area or barangay / city</label><input class="in" id="area" name="area" type="text" autocomplete="address-level2" placeholder="Where is the car parked?"></div>
+          <div class="row two">
+            <div class="field"><label for="date">Preferred date</label><input class="in" id="date" name="date" type="date"></div>
+            <div class="field"><label for="time">Preferred time</label>
+              <select class="in" id="time" name="time"><option>Morning</option><option>Afternoon</option><option selected>Any time works</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="notes">Anything we should know?</label><textarea class="in" id="notes" name="notes" placeholder="Stains, pet hair, parking space, current condition, questions..."></textarea></div>
+          <button class="btn btn-sun" type="submit">Prepare my booking request</button>
+          <p class="note">This prepares a message you can copy and send to Sunny's. Nothing is sent from this page.</p>
+        </form>
+        <div class="form result" id="result" hidden aria-live="polite">
+          <h3>Your request is ready.</h3>
+          <p class="lede">Copy it and send it to Sunny's by Messenger or text. We'll confirm your slot and your quote.</p>
+          <pre id="msg"></pre>
+          <div class="cta-row">
+            <button class="btn btn-sun" type="button" id="copyBtn">Copy request</button>
+            <button class="btn btn-line" type="button" id="editBtn">Edit details</button>
+          </div>
+          <p class="note" id="copyNote" role="status"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Good to know</p>
+        <h2 class="display">Questions, <em>answered.</em></h2>
+      </div>
+      <div class="faq">
+        <details><summary>Where are you based?</summary><p>Sunny's is at Purok 5, Arnaldo Hwy, General Trias, Cavite. Call 0954 443 2362 or send a booking request, and tell us where your car is parked so we can confirm we can reach you.</p></details>
+        <details><summary>Do you really come to my home or office?</summary><p>Yes. Mobile service is what we do. Home, office and company locations are all fine, and customers have booked us for personal cars and work vans alike.</p></details>
+        <details><summary>What if I don't have enough space at home?</summary><p>Just tell us when you book. We'll suggest bringing the car to our location instead so the job still gets done properly.</p></details>
+        <details><summary>Can I reschedule?</summary><p>Yes. Customers tell us booking and rescheduling is easy. Message us and we'll find a new slot.</p></details>
+        <details><summary>Do you do ceramic coating, PPF and tint?</summary><p>Yes. Ceramic coating, paint protection film and window tint are all part of the menu, along with washes and full interior and exterior detailing.</p></details>
+        <details><summary>Do you service motorcycles and company vehicles?</summary><p>Yes to both. We detail motorcycles, and we've worked on company service vehicles such as vans at the client's own location.</p></details>
+        <details><summary>How much does it cost?</summary><p>Price depends on the vehicle size, its condition and the service you choose. Send a request and you'll get a clear quote before any work begins. Customers consistently describe our pricing as fair and reasonable.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <p class="eyebrow">Ready when you are</p>
+      <h2 class="display">Your car is already parked. <em>Let's make it shine.</em></h2>
+      <a class="btn btn-sun" href="#book">Book a visit</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="7" fill="url(#sg)"/><g stroke="url(#sg)" stroke-width="2" stroke-linecap="round" fill="none"><path d="M16 2.5v4M16 25.5v4M2.5 16h4M25.5 16h4M6.5 6.5l2.8 2.8M22.7 22.7l2.8 2.8M25.5 6.5l-2.8 2.8M9.3 22.7l-2.8 2.8"/></g></svg>
+      <span><b>Sunny's</b></span>
+    </a>
+    <nav aria-label="Footer"><a href="#services">Services</a><a href="#reviews">Reviews</a><a href="#book">Book</a><a href="#faq">FAQ</a></nav>
+    <span>Purok 5, Arnaldo Hwy, General Trias, Cavite &middot; 0954 443 2362</span>
+    <span>Sunny Mobile Car Wash &amp; Auto Detailing &middot; <span id="yr"></span></span>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar"><a class="btn btn-sun" href="#book">Book a visit</a><a class="btn btn-line" href="#services">Services</a></div>
+
+<script>
+/* Add the shop's real contact channels here. They appear beside the booking form when filled in. */
+var CONTACT = { messenger: "", phone: "0954 443 2362", email: "", maps: "https://www.google.com/maps/search/?api=1&query=Sunny+Mobile+Car+Wash+%26+Auto+Detailing+General+Trias+Cavite" };
+
+var SERVICES = [
+  { id: "wash", name: "Mobile Car Wash", tag: "At your driveway",
+    title: "A careful wash, wherever you're parked.",
+    d: "A thorough exterior wash done at your location, so you get your time back and a car that looks freshly delivered.",
+    list: ["Thorough exterior wash, wheels to roof", "At your home or office, on your schedule", "Careful, unhurried hands"],
+    q: "They bring a showroom-quality clean directly to my driveway.", by: "Herbie Porto, Google review" },
+  { id: "interior", name: "Interior Detailing", tag: "Deep clean, inside out",
+    title: "Seats, dashboard and carpets, properly cleaned.",
+    d: "Stains, grime and odors are the target. Fabric, leather and trim are all handled with care.",
+    list: ["Seats and carpets deep cleaned", "Dashboard, trim and the easy-to-miss spots", "Stain and odor removal", "Leather brought back to life"],
+    q: "Their attention to detail are topnotch.", by: "Rod Riggs, Google review" },
+  { id: "full", name: "Full Detail", tag: "Interior + exterior",
+    title: "The whole car, restored in one visit.",
+    d: "Exterior shine, a deep-cleaned cabin and the places most people forget, including the engine bay.",
+    list: ["Exterior wash and shine", "Full interior detail", "Engine bay clean", "Acid rain stain removal"],
+    q: "Our 8-year-old car looks and smells almost brand new (outside & inside) after the detailing.", by: "Blez17, Google review" },
+  { id: "ceramic", name: "Ceramic Coating & PPF", tag: "Shine that protects",
+    title: "Gloss you can see. Protection you can feel.",
+    d: "Ceramic coating for a deep, slick finish and paint protection film for owners who want their paint to stay perfect.",
+    list: ["Ceramic coating for gloss and protection", "Paint protection film (PPF) against scratches and chips", "Careful preparation and application", "Coating and PPF can be combined"],
+    q: "After they put the ceramic on, we could see the difference right away.", by: "Paula Derramas, Google review" },
+  { id: "tint", name: "Window Tint", tag: "Sleek and cool",
+    title: "Tint that fits clean and looks sleek.",
+    d: "A neat installation that adds privacy and takes the edge off the cabin heat.",
+    list: ["Clean, precise installation", "More privacy and a cooler cabin", "Pairs well with a detail or coating"],
+    q: "Pati paglagay ng tint, napaka sleek.", by: "Google review" },
+  { id: "fleet", name: "Fleet & Company Vehicles", tag: "For businesses",
+    title: "Work vehicles that work to impress.",
+    d: "Vans, service vehicles and company cars detailed at your location, so your fleet stays presentable without leaving the job.",
+    list: ["Done on site, with less downtime", "Interior and exterior packages", "Multiple vehicles in one visit"],
+    q: "Highly recommended for businesses needing top-notch vehicle detailing!", by: "LIAV, Google review" },
+  { id: "moto", name: "Motorcycles", tag: "Two wheels welcome",
+    title: "The same careful hands, for your bike.",
+    d: "Wash and detailing for motorcycles, with the same attention we give every car.",
+    list: ["Motorcycle wash and detail", "Done at your home or ours", "Book alongside your car"],
+    q: "They also offer detailing and car tint services for our beloved car and motorcycle.", by: "JoshDJ, Google review" }
+];
+
+(function () {
+  var tabs = document.getElementById("tabs"), panel = document.getElementById("svcPanel"), sel = document.getElementById("service");
+  var cur = 0, btns = [];
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function show(i, focus) {
+    cur = i;
+    btns.forEach(function (b, j) { b.setAttribute("aria-selected", j === i ? "true" : "false"); b.tabIndex = j === i ? 0 : -1; });
+    var s = SERVICES[i];
+    panel.setAttribute("aria-labelledby", "tab-" + s.id);
+    panel.innerHTML = '<span class="tag">' + esc(s.tag) + '</span><h3>' + esc(s.title) + '</h3><p class="d">' + esc(s.d) + '</p><ul class="ticks">' +
+      s.list.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + '</ul><div class="quote"><blockquote>“' + esc(s.q) + '”</blockquote><cite>' + esc(s.by) + '</cite></div>' +
+      '<div><button type="button" class="btn btn-sun btn-sm" id="pick">Request this service</button></div>';
+    document.getElementById("pick").addEventListener("click", function () { sel.value = s.id; document.getElementById("book").scrollIntoView(); });
+    if (focus) btns[i].focus();
+  }
+  SERVICES.forEach(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "tab"; b.id = "tab-" + s.id; b.setAttribute("role", "tab"); b.textContent = s.name;
+    b.addEventListener("click", function () { show(i); });
+    b.addEventListener("keydown", function (e) {
+      var k = e.key, n = null;
+      if (k === "ArrowRight" || k === "ArrowDown") n = (cur + 1) % SERVICES.length;
+      else if (k === "ArrowLeft" || k === "ArrowUp") n = (cur - 1 + SERVICES.length) % SERVICES.length;
+      if (n !== null) { e.preventDefault(); show(n, true); }
+    });
+    tabs.appendChild(b); btns.push(b);
+    var o = document.createElement("option"); o.value = s.id; o.textContent = s.name; sel.appendChild(o);
+  });
+  var oo = document.createElement("option"); oo.value = "not-sure"; oo.textContent = "Not sure yet, please advise"; sel.appendChild(oo);
+  show(0);
+
+  /* contact links */
+  var c = document.getElementById("contact"), html = "";
+  if (CONTACT.messenger) html += '<a class="btn btn-line btn-sm" href="' + esc(CONTACT.messenger) + '" target="_blank" rel="noopener">Messenger</a>';
+  if (CONTACT.phone) html += '<a class="btn btn-line btn-sm" href="tel:' + esc(CONTACT.phone.replace(/\s+/g, "")) + '">' + esc(CONTACT.phone) + '</a>';
+  if (CONTACT.maps) html += '<a class="btn btn-line btn-sm" href="' + esc(CONTACT.maps) + '" target="_blank" rel="noopener">Directions</a>';
+  if (CONTACT.email) html += '<span class="btn btn-line btn-sm">' + esc(CONTACT.email) + '</span>';
+  c.innerHTML = html;
+
+  /* footer year, date min */
+  var now = new Date();
+  document.getElementById("yr").textContent = now.getFullYear();
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  document.getElementById("date").min = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+
+  /* booking form */
+  var form = document.getElementById("bookForm"), result = document.getElementById("result"), msg = document.getElementById("msg"), note = document.getElementById("copyNote");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = new FormData(form), svc = SERVICES.filter(function (s) { return s.id === f.get("service"); })[0];
+    var lines = [
+      "Hi Sunny's! I'd like to book a visit.",
+      "",
+      "Service: " + (svc ? svc.name : "Not sure yet, please advise"),
+      "Vehicle: " + f.get("vehicle"),
+      "Location: " + f.get("place") + (f.get("area") ? " (" + f.get("area") + ")" : ""),
+      "Preferred: " + (f.get("date") ? f.get("date") + ", " : "") + f.get("time"),
+      "Name: " + f.get("name"),
+      "Mobile: " + f.get("mobile")
+    ];
+    if (String(f.get("notes")).trim()) lines.push("Notes: " + String(f.get("notes")).trim());
+    msg.textContent = lines.join("\n");
+    note.textContent = "";
+    form.hidden = true; result.hidden = false;
+    result.scrollIntoView({ block: "start" });
+  });
+  document.getElementById("editBtn").addEventListener("click", function () { result.hidden = true; form.hidden = false; form.scrollIntoView({ block: "start" }); });
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(msg);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent = "Select and copy the text above to send it.";
+    }
+    try {
+      navigator.clipboard.writeText(msg.textContent).then(function () { note.textContent = "Copied. Paste it into your message to Sunny's."; }, fallback);
+    } catch (err) { fallback(); }
+  });
+
+  /* mobile bar hides while the booking section is in view */
+  var mbar = document.getElementById("mbar"), book = document.getElementById("book");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { mbar.classList.toggle("off", en[0].isIntersecting); }, { threshold: 0.1 }).observe(book);
+  }
+})();
+
+/* hero: glossy panel with water beads and a sun glint */
+(function () {
+  var cv = document.getElementById("beads"); if (!cv) return;
+  var ctx = cv.getContext("2d"), box = cv.parentElement;
+  var W = 0, H = 0, dpr = 1, drops = [], raf = 0, visible = true, pointer = false;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var target = { x: .72, y: .22 }, cur = { x: .72, y: .22 };
+
+  function seed() {
+    drops = [];
+    var n = Math.round(Math.min(260, Math.max(90, W * H / 2600))), tries = 0;
+    while (drops.length < n && tries < n * 30) {
+      tries++;
+      var big = Math.random() < .12;
+      var r = big ? 9 + Math.random() * 10 : 2.5 + Math.pow(Math.random(), 2.2) * 8;
+      var x = Math.random() * W, y = Math.random() * H, ok = true;
+      for (var i = 0; i < drops.length; i++) {
+        var dx = drops[i].x - x, dy = drops[i].y - y, m = drops[i].r + r + 1.5;
+        if (dx * dx + dy * dy < m * m) { ok = false; break; }
+      }
+      if (ok) drops.push({ x: x, y: y, r: r });
+    }
+  }
+  function size() {
+    var rc = box.getBoundingClientRect();
+    if (Math.abs(rc.width - W) < 2 && Math.abs(rc.height - H) < 2) return;
+    W = rc.width; H = rc.height; dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed(); draw();
+  }
+  function draw() {
+    var lx = cur.x * W, ly = cur.y * H, span = Math.max(W, H);
+    var g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#14263d"); g.addColorStop(.55, "#0a1626"); g.addColorStop(1, "#060d17");
+    ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "screen";
+    var band = ctx.createLinearGradient(lx - .34 * W, ly - .2 * H, lx + .34 * W, ly + .2 * H);
+    band.addColorStop(0, "rgba(180,205,240,0)"); band.addColorStop(.5, "rgba(180,205,240,.13)"); band.addColorStop(1, "rgba(180,205,240,0)");
+    ctx.fillStyle = band; ctx.fillRect(0, 0, W, H);
+    var sun = ctx.createRadialGradient(lx, ly, 0, lx, ly, span * .6);
+    sun.addColorStop(0, "rgba(255,214,120,.6)"); sun.addColorStop(.22, "rgba(244,182,63,.2)"); sun.addColorStop(1, "rgba(244,182,63,0)");
+    ctx.fillStyle = sun; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "source-over";
+    for (var i = 0; i < drops.length; i++) {
+      var d = drops[i], dx = lx - d.x, dy = ly - d.y, dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      var ux = dx / dist, uy = dy / dist, prox = Math.max(0, 1 - dist / (span * .9));
+      ctx.fillStyle = "rgba(0,0,0,.34)"; ctx.beginPath();
+      ctx.ellipse(d.x - ux * d.r * .25, d.y - uy * d.r * .25 + d.r * .18, d.r * 1.02, d.r * .96, 0, 0, 6.2832); ctx.fill();
+      var body = ctx.createRadialGradient(d.x + ux * d.r * .25, d.y + uy * d.r * .25, d.r * .1, d.x, d.y, d.r);
+      body.addColorStop(0, "rgba(190,215,245," + (.05 + .12 * prox).toFixed(3) + ")");
+      body.addColorStop(.7, "rgba(150,185,230,.06)");
+      body.addColorStop(1, "rgba(220,235,255," + (.16 + .2 * prox).toFixed(3) + ")");
+      ctx.fillStyle = body; ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 6.2832); ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,.16)"; ctx.lineWidth = .7; ctx.stroke();
+      var sx = d.x + ux * d.r * .42, sy = d.y + uy * d.r * .42, sr = Math.max(1, d.r * .3);
+      var sp = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr);
+      sp.addColorStop(0, "rgba(255,255,255," + (.5 + .45 * prox).toFixed(3) + ")"); sp.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = sp; ctx.beginPath(); ctx.arc(sx, sy, sr, 0, 6.2832); ctx.fill();
+      var cx = d.x - ux * d.r * .38, cy = d.y - uy * d.r * .38, cr = Math.max(1, d.r * .4);
+      var ca = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
+      ca.addColorStop(0, "rgba(255,200,90," + (.06 + .35 * prox).toFixed(3) + ")"); ca.addColorStop(1, "rgba(255,200,90,0)");
+      ctx.fillStyle = ca; ctx.beginPath(); ctx.arc(cx, cy, cr, 0, 6.2832); ctx.fill();
+    }
+  }
+  function frame(t) {
+    if (!pointer) { target.x = .5 + .38 * Math.cos(t * .00018); target.y = .3 + .22 * Math.sin(t * .00023); }
+    cur.x += (target.x - cur.x) * .08; cur.y += (target.y - cur.y) * .08;
+    draw();
+    if (!reduce && visible) raf = requestAnimationFrame(frame);
+  }
+  function kick() { if (!raf && !reduce && visible) raf = requestAnimationFrame(function (t) { raf = 0; frame(t); }); }
+  box.addEventListener("pointermove", function (e) {
+    var rc = box.getBoundingClientRect(); pointer = true;
+    target.x = (e.clientX - rc.left) / rc.width; target.y = (e.clientY - rc.top) / rc.height;
+    if (reduce) { cur.x = target.x; cur.y = target.y; draw(); }
+  });
+  box.addEventListener("pointerleave", function () { pointer = false; });
+  if ("ResizeObserver" in window) new ResizeObserver(size).observe(box); else window.addEventListener("resize", size);
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) kick(); }, { threshold: 0 }).observe(box);
+  }
+  size(); if (!W) { var rc = box.getBoundingClientRect(); W = 0; size(); }
+  kick();
+})();
+</script>
+
+</body></html>
